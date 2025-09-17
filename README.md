@@ -2,6 +2,8 @@
 
 Completed Assessment for Kimo using FastAPI.
 
+<strong>This API works with Python v3.12</strong>
+
 ## Running Tests
 ```py
 pytest
