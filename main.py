@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import contextlib
 from fastapi import FastAPI, HTTPException, Query
 from pymongo import MongoClient
@@ -40,7 +42,7 @@ def get_courses(sort_by: str = 'date', domain: str = None):
         sort_order = -1
 
     # sort_by == 'alphabetical' [ASCENDING]
-    else:  
+    else:
         sort_field = 'name'
         sort_order = 1
 
@@ -51,10 +53,10 @@ def get_courses(sort_by: str = 'date', domain: str = None):
 
     courses = db.courses.find(query, {'name': 1, 'date': 1, 'description': 1, 'domain':1,'rating':1,'_id': 0}).sort(sort_field, sort_order)
     return list(courses)
- 
- 
+
+
 """
-Endpoint to get the course overview. 
+Endpoint to get the course overview.
 """
 @app.get('/courses/{course_id}')
 def get_course(course_id: str):
@@ -64,16 +66,16 @@ def get_course(course_id: str):
     try:
         course['rating'] = course['rating']['total']
     except KeyError:
-        course['rating'] = 'Not rated yet' 
-    
-    return course
- 
+        course['rating'] = 'Not rated yet'
 
-""" 
+    return course
+
+
+"""
 Endpoint to get a specific chapter information.
-""" 
+"""
 @app.get('/courses/{course_id}/{chapter_id}')
-def get_chapter(course_id: str, chapter_id: str):    
+def get_chapter(course_id: str, chapter_id: str):
     course = db.courses.find_one({'_id': ObjectId(course_id)}, {'_id': 0, })
     if not course:
         raise HTTPException(status_code=404, detail='Course not found')
@@ -102,6 +104,6 @@ def rate_chapter(course_id: str, chapter_id: str, rating: int = Query(..., gt=-2
     except KeyError:
         chapter['rating'] = {'total': rating, 'count': 1}
     db.courses.update_one({'_id': ObjectId(course_id)}, {'$set': {'chapters': chapters}})
-    return chapter 
+    return chapter
 
 
