@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import contextlib
+import uvicorn
 from fastapi import FastAPI, HTTPException, Query
 from pymongo import MongoClient
 from bson import ObjectId
@@ -9,7 +10,7 @@ from fastapi.encoders import jsonable_encoder
 app = FastAPI()
 client = MongoClient('mongodb://localhost:27017/')
 db = client['courses']
-
+port = 8000
 
 """
 Endpoint to get a list of all available courses. This endpoint needs to support 3 modes of
@@ -107,3 +108,5 @@ def rate_chapter(course_id: str, chapter_id: str, rating: int = Query(..., gt=-2
     return chapter
 
 
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=port)
