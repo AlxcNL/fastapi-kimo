@@ -11,7 +11,7 @@ pytest
 
 # Adding the Collection to MongoDB
 ```py
-python script.py
+python mongodb/insert_data.py
 ```
 
 ## Screenshots with Endpoints
