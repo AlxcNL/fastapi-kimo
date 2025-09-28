@@ -15,14 +15,17 @@ conda install -y \
     idna \
     iniconfig \
     packaging \
+    pandas \
     pluggy \
     pydantic \
+    pylint \
     pymongo \
     pytest \
     python-dateutil \
     rfc3986 \
     six \
     sniffio \
+    sqlite \
     starlette \
     tomli \
     typing_extensions \
