@@ -9,7 +9,8 @@ and finally add the course data on the collection(s).
 import pymongo
 import json
 
-host="localhost"
+host = "localhost"
+jsonfile = "../data/courses.json"
 
 # Connect to MongoDB
 client = pymongo.MongoClient(f"mongodb://{host}:27017/")
@@ -17,7 +18,7 @@ db = client["courses"]
 collection = db["courses"]
 
 # Read courses from courses.json
-with open("courses.json", "r") as f:
+with open(jsonfile, "r") as f:
     courses = json.load(f)
 
 # Create index for efficient retrieval
