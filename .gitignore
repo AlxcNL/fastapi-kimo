@@ -4,3 +4,6 @@ venv/
 scripts/contextlib
 mongodb/data
 sqlite/data/courses
+.DS_Store
+sqlite/courses.db
+data/courses.csv

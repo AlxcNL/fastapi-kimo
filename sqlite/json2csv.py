@@ -8,22 +8,34 @@ import pandas as pd
 
 jsonFile = "../data/courses.json"
 csvFile = "../data/courses.csv"
+separator = ';'
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 with open(jsonFile) as data_file:
     coursesList = json.load(data_file)
 
-coursesItem = coursesList[0]
-
 logging.debug(f"Type coursesList : {type(coursesList)}")
-logging.debug(f"Type coursesItem : {type(coursesItem)}")
 
-del coursesItem['chapters']
-logging.debug(coursesItem)
+logging.info("Write CSV Header")
 
-coursesDf = pd.DataFrame(coursesItem)
-logging.info(coursesDf)
+firstLine = coursesList[0]
+del firstLine['chapters']
+cols = list(firstLine.keys())
+logging.debug(type(cols))
 
-# Save as CSV
-coursesDf.to_csv(csvFile, index=False, sep=';')
+header = f"{separator}".join(cols)
+logging.info(header)
+
+with open(csvFile, "w", encoding="utf-8") as f:
+    f.write(header)
+
+for coursesItem in coursesList:
+    del coursesItem['chapters']
+    logging.debug(coursesItem)
+
+    coursesDf = pd.DataFrame(coursesItem)
+    logging.debug(coursesDf)
+
+    coursesDf.to_csv(csvFile, index=False, sep=separator, mode='a', header=False)
+
