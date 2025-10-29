@@ -1,0 +1,16 @@
+name: "FastAPI"
+
+on:
+  push:
+    branches:
+      - master
+      
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
